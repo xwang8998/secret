@@ -1,0 +1,853 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+F:\smec98sp资料包\SMEC98SP SDK V31\样例参考\主控MCU样例\SMEC98SPfor8051_accu-n - uart\SMEC98SPfor8051.uvproj
+Project File Date:  04/22/2019
+
+<h2>Output:</h2>
+
+InitXmlModel(): using folder 'd:\Keil_v5\ARM\PACK'
+Parsing RTE Files ... 
+failed.
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+moni_I2C_A\MONI_I2C_A.C(16): error C141: syntax error near 'dat', expected ')'
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2067
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 13 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2067
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 13 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2098
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2098
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2098
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2096
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2098
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=107.6 xdata=0 code=2101
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 11 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2098
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 12 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2118
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 11 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'ret': unreferenced local variable
+main.c(600): warning C280: 'i': unreferenced local variable
+main.c(600): warning C280: 'k': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?CHECKSUM_EXT?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=113.6 xdata=0 code=2118
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 11 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(753): error C214: illegal pointer conversion
+compiling MONI_I2C_A.C...
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(753): error C193: '=': illegal type conversion from/to 'void'
+compiling MONI_I2C_A.C...
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=105.6 xdata=0 code=2233
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=105.6 xdata=0 code=2233
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=105.6 xdata=0 code=2160
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=105.6 xdata=0 code=2155
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2136
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2136
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2187
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2266
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2266
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(762): error C208: '_i2c_single_byte_read': too many actual parameters
+compiling MONI_I2C_A.C...
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(762): error C208: '_i2c_single_byte_read': too many actual parameters
+compiling MONI_I2C_A.C...
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2259
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2259
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2266
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2266
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2262
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2259
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(600): warning C280: 'j': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2262
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2277
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2277
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2531
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2454
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2454
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 6 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=106.6 xdata=0 code=2361
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+main.c(668): error C141: syntax error near '='
+main.c(668): error C141: syntax error near ')'
+compiling MONI_I2C_A.C...
+Target not created
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=107.6 xdata=0 code=2382
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(540): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=107.6 xdata=0 code=2382
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 7 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(408): warning C280: 'i': unreferenced local variable
+main.c(526): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=109.6 xdata=0 code=2347
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(408): warning C280: 'i': unreferenced local variable
+main.c(541): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=109.6 xdata=0 code=2343
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(408): warning C280: 'i': unreferenced local variable
+main.c(541): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=109.6 xdata=0 code=2343
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).
+Rebuild target 'Target 1'
+compiling main.c...
+main.c(7): warning C318: can't open file 'moni_I2C_A.h'
+main.c(408): warning C280: 'i': unreferenced local variable
+main.c(541): warning C280: 'pbPin': unreferenced local variable
+compiling MONI_I2C_A.C...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FAKE_CHECK?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SMEC_GETUID?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SMEC_TEST?MAIN
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?I2C_INIT?MONI_I2C_A
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_I2C_SINGLE_BYTE_READ?MONI_I2C_A
+Program Size: data=109.6 xdata=0 code=2346
+creating hex file from ".\OBJ\SMEC98SPfor8051"...
+".\OBJ\SMEC98SPfor8051" - 0 Error(s), 8 Warning(s).

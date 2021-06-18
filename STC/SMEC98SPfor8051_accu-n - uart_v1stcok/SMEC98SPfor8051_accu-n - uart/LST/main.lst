@@ -1,0 +1,883 @@
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 1   
+
+
+C51 COMPILER V9.06, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\OBJ\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\SMEC98SPfor8051_accu;.\SMEC98S
+                    -P\Header;.\fpga_i2c) DEBUG OBJECTEXTEND PRINT(.\LST\main.lst) TABS(2) OBJECT(.\OBJ\main.obj)
+
+line level    source
+
+   1          //#include <STC15F2K60S2.H>
+   2          #include "stc8g.h"
+   3          #include "string.h"
+   4          #include <stdlib.h>
+   5          #include <SMEC98SP.h>
+   6          #include <iic_smec98sp.h>
+   7          //#include "my.h"
+   8          #include <moni_I2C_A.h>
+*** WARNING C318 IN LINE 8 OF main.c: can't open file 'moni_I2C_A.h'
+   9          
+  10          
+  11          #define FPGA_ADDR 0xA0
+  12          #define HIGH  1
+  13          #define LOW   0
+  14          #define IIC_NOACK 1
+  15          #define IIC_ACK 0
+  16          #define IIC_DELAYTIME 5     //IICÍ¨Ñ¶ËÙÂÊ´óÔ¼100K
+  17          #define IIC_ADDR  0x00      //¶ÔÓ¦SMEC98SPÖÐµØÖ·
+  18          #define ACKCHECKTIME 600
+  19          #define BAUD  0xFEC8  
+  20          typedef bit BOOL;
+  21          typedef unsigned char BYTE;
+  22          typedef unsigned int WORD;
+  23          
+  24          BYTE TBUF,RBUF;
+  25          BYTE TDAT,RDAT;
+  26          BYTE TCNT,RCNT;
+  27          BYTE TBIT,RBIT;
+  28          BOOL TING,RING;
+  29          BOOL TEND,REND;
+  30          
+  31          #define STACK_MAX  16
+  32          unsigned char gfail;
+  33          //unsigned char gi, gj,gk,gm,gn,gret,gfail; //changed linsd //xdata
+  34          //unsigned char gi, gj,gk,gm,gn,gret,gfail,; //changed linsd //xdata
+  35           //unsigned char code InternalKey[16] = {0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,
+             -0x0D,0x0E,0x0F};//ÄÚ²¿ÈÏÖ¤ÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+  36          // unsigned char buf[20];
+  37          unsigned short gx_checksum,xuint,gx_checksum_get;
+  38          
+  39          
+  40          /******************************************************************************************
+  41          /*ÑÓÊ±usº¯Êý22.1184M  1T
+  42          /******************************************************************************************/
+  43          
+  44                           //38400bps @ 11.0592MHz
+  45          sbit    IO_INOUT    =P5^4;      //¶¨ÒåIIC inout¹Ü½Å£¬
+  46          sbit    IIC_SCL     =P3^2;      //¶¨ÒåIIC SCL¹Ü½Å
+  47          sbit    IIC_SDA     =P3^3;      //¶¨ÒåIIC SDA¹Ü½Å£¬
+  48          sbit    EN     =P5^5;     //¶¨ÒåIIC en¹Ü½Å£¬
+  49          sbit    RXB = P3^0;                        //define UART TX/RX port
+  50          sbit    TXB = P3^1;
+  51          
+  52          
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 2   
+
+  53          
+  54          
+  55          void IIC_Delayus(unsigned int n);
+  56          void UART_SEND(BYTE dat);
+  57          extern unsigned char i2c_single_byte_read(unsigned char xdevaddr,unsigned char RdAddr);
+  58          extern void  i2c_single_byte_write(unsigned char xdevaddr,unsigned char xbyte_addr,unsigned char xbyte_dat
+             -a);
+  59          
+  60          void StartUART( void );
+  61          void Starttimer0(void);
+  62          void delay_nms(unsigned int i);
+  63          void print_string(char *str);
+  64          void PrintHex(unsigned char *str,unsigned int len);
+  65          void UART_INIT();
+  66          
+  67          //BYTE t, r;
+  68          BYTE buf[20];
+  69          //-----------------------------------------
+  70          //Timer interrupt routine for UART
+  71          
+  72          void tm0() interrupt 1 using 1
+  73          {
+  74   1        
+  75   1          if (RING)
+  76   1          {
+  77   2              if (--RCNT == 0)
+  78   2              {
+  79   3                  RCNT = 3;                   //reset send baudrate counter
+  80   3                  if (--RBIT == 0)
+  81   3                  {
+  82   4                      RBUF = RDAT;            //save the data to RBUF
+  83   4                      RING = 0;               //stop receive
+  84   4                      REND = 1;               //set receive completed flag
+  85   4                  }
+  86   3                  else
+  87   3                  {
+  88   4                      RDAT >>= 1;
+  89   4                      if (RXB) RDAT |= 0x80;  //shift RX data to RX buffer
+  90   4                  }
+  91   3              }
+  92   2          }
+  93   1          else if (!RXB)
+  94   1          {
+  95   2              RING = 1;                       //set start receive flag
+  96   2              RCNT = 4;                       //initial receive baudrate counter
+  97   2              RBIT = 9;                       //initial receive bit number (8 data bits + 1 stop bit)
+  98   2          }
+  99   1      
+ 100   1          if (--TCNT == 0)
+ 101   1          {
+ 102   2              TCNT = 3;                       //reset send baudrate counter
+ 103   2              if (TING)                       //judge whether sending
+ 104   2              {
+ 105   3                  if (TBIT == 0)
+ 106   3                  {
+ 107   4                      TXB = 0;                //send start bit
+ 108   4                      TDAT = TBUF;            //load data from TBUF to TDAT
+ 109   4                      TBIT = 9;               //initial send bit number (8 data bits + 1 stop bit)
+ 110   4                  }
+ 111   3                  else
+ 112   3                  {
+ 113   4                      TDAT >>= 1;             //shift data to CY
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 3   
+
+ 114   4                      if (--TBIT == 0)
+ 115   4                      {
+ 116   5                          TXB = 1;
+ 117   5                          TING = 0;           //stop send
+ 118   5                          TEND = 1;           //set send completed flag
+ 119   5                      }
+ 120   4                      else
+ 121   4                      {
+ 122   5                          TXB = CY;           //write CY to TX port
+ 123   5                      }
+ 124   4                  }
+ 125   3              }
+ 126   2          }
+ 127   1      }
+ 128          
+ 129          //-----------------------------------------
+ 130          //initial UART module variable
+ 131          
+ 132          void UART_INIT()
+ 133          {
+ 134   1          TING = 0;
+ 135   1          RING = 0;
+ 136   1          TEND = 1;
+ 137   1          REND = 0;
+ 138   1          TCNT = 0;
+ 139   1          RCNT = 0;
+ 140   1      }
+ 141          void UART_SEND(BYTE dat)
+ 142          {
+ 143   1          while (!TEND);
+ 144   1          TEND = 0;
+ 145   1          TBUF = dat;
+ 146   1          TING = 1;
+ 147   1      }
+ 148          /*
+ 149          void UART_HEX(unsigned char *buf, unsigned char len)
+ 150          {
+ 151            unsigned int i;
+ 152              for(i=0;i<len;i++)
+ 153              {
+ 154                UART_SEND(buf[i]);
+ 155              }
+ 156          }
+ 157          */
+ 158          void IIC_Delayus(unsigned int n)
+ 159          {
+ 160   1        //unsigned char i;
+ 161   1        for(;n>0;n--)
+ 162   1        {
+ 163   2          ;//i = 1;
+ 164   2        } 
+ 165   1      }
+ 166          void    IIC_SetSDA(unsigned char level)
+ 167          {
+ 168   1        if(level == HIGH)
+ 169   1        {
+ 170   2          IIC_SDA = 1;
+ 171   2        }else
+ 172   1        {
+ 173   2          IIC_SDA = 0;
+ 174   2        }
+ 175   1      }
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 4   
+
+ 176          void    IIC_SetSCL(unsigned char level)
+ 177          {
+ 178   1        if(level == HIGH)
+ 179   1        {
+ 180   2          IIC_SCL = 1;
+ 181   2        }else
+ 182   1        {
+ 183   2          IIC_SCL = 0;
+ 184   2        }
+ 185   1      }
+ 186          void SetSDAto_InputMode(void)
+ 187          {
+ 188   1        //¸ù¾ÝÐ¾Æ¬ÊÖ²áÅäÖÃ
+ 189   1        IIC_SDA = 1;      //ÉèÎªÊäÈë
+ 190   1        IO_INOUT = 0;
+ 191   1        
+ 192   1      }
+ 193          void SetSDAto_OutputMode(void)
+ 194          {
+ 195   1        //¸ù¾ÝÐ¾Æ¬ÊÖ²áÅäÖÃ
+ 196   1        //±¾µ¥Æ¬»ú²»ÓÃÉèÖÃ¿ÉÖ±½ÓÊä³ö
+ 197   1        IO_INOUT = 1;
+ 198   1        
+ 199   1      }
+ 200          
+ 201          void   IIC_Start(void)
+ 202          {
+ 203   1        SetSDAto_OutputMode();      //SDAÉèÎªÊä³öÄ£Ê½
+ 204   1        IIC_SetSDA(HIGH);
+ 205   1        IIC_SetSCL(HIGH);
+ 206   1        IIC_Delayus(IIC_DELAYTIME);     
+ 207   1        IIC_SetSDA(LOW);
+ 208   1        IIC_Delayus(IIC_DELAYTIME);
+ 209   1        IIC_SetSCL(LOW);
+ 210   1      }
+ 211          
+ 212          void   IIC_Stop(void)
+ 213          { 
+ 214   1        SetSDAto_OutputMode();      //SDAÉèÎªÊä³öÄ£Ê½
+ 215   1        IIC_SetSDA(LOW);
+ 216   1        IIC_SetSCL(HIGH);
+ 217   1        IIC_Delayus(IIC_DELAYTIME);
+ 218   1        IIC_SetSDA(HIGH);
+ 219   1        IIC_Delayus(IIC_DELAYTIME);
+ 220   1      }
+ 221          unsigned char IIC_GetSdaStus(void)
+ 222          {
+ 223   1        unsigned char tmp;
+ 224   1      
+ 225   1        if(IIC_SDA == 1)  
+ 226   1          tmp=1;
+ 227   1        else 
+ 228   1          tmp=0;
+ 229   1        return tmp;
+ 230   1      }
+ 231          
+ 232          
+ 233          unsigned char  IIC_Send(unsigned char IIC_data)
+ 234          {
+ 235   1        unsigned char Ack ;
+ 236   1        unsigned int AckLoop;
+ 237   1        unsigned char xtmp;
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 5   
+
+ 238   1        unsigned char i;
+ 239   1        SetSDAto_OutputMode();      //SDAÉèÎªÊä³öÄ£Ê½
+ 240   1          //xtmp = IIC_data;//50;
+ 241   1        //while(1)
+ 242   1        //{IIC_SDA = 1;
+ 243   1           //IIC_Delayus(8);
+ 244   1         //IIC_SDA = 0;
+ 245   1           //IIC_Delayus(8);
+ 246   1         //IIC_SDA = 0;
+ 247   1           //IIC_Delayus(8);
+ 248   1        //}
+ 249   1          //while(1){
+ 250   1        xtmp = IIC_data;//50;
+ 251   1        for(i=0;i<8;i++)
+ 252   1        {
+ 253   2          IIC_SetSCL(LOW);
+ 254   2          IIC_Delayus(IIC_DELAYTIME);
+ 255   2          if((xtmp&0x80)==0)
+ 256   2             IIC_SetSDA(0);
+ 257   2          else
+ 258   2             IIC_SetSDA(1);
+ 259   2          IIC_Delayus(IIC_DELAYTIME);
+ 260   2          IIC_SetSCL(HIGH);
+ 261   2          IIC_Delayus(IIC_DELAYTIME);
+ 262   2          IIC_Delayus(IIC_DELAYTIME);
+ 263   2          xtmp<<= 1;
+ 264   2        }
+ 265   1        //IIC_Delayus(1000);
+ 266   1         //}
+ 267   1        
+ 268   1        IIC_SetSCL(LOW);
+ 269   1        IIC_Delayus(IIC_DELAYTIME);
+ 270   1        IIC_Delayus(IIC_DELAYTIME);
+ 271   1          SetSDAto_InputMode();//SDAÉèÎªÊäÈëÄ£Ê½
+ 272   1        IIC_SetSCL(HIGH);
+ 273   1        IIC_Delayus(IIC_DELAYTIME);
+ 274   1        IIC_Delayus(IIC_DELAYTIME);
+ 275   1        Ack = IIC_NOACK;
+ 276   1              
+ 277   1        for(AckLoop=0;AckLoop<ACKCHECKTIME;AckLoop++) //260us
+ 278   1        {
+ 279   2          if(!IIC_GetSdaStus())
+ 280   2          {
+ 281   3            Ack = IIC_ACK;
+ 282   3            break;
+ 283   3          }
+ 284   2          IIC_Delayus(IIC_DELAYTIME);
+ 285   2        }
+ 286   1        IIC_SetSCL(LOW);
+ 287   1        
+ 288   1        
+ 289   1        return Ack;     //return success=0 / failure=1
+ 290   1      }
+ 291          
+ 292          unsigned char IIC_Read(unsigned char bACK)
+ 293          {
+ 294   1        unsigned char Data;
+ 295   1        unsigned char i;
+ 296   1        Data = 0;
+ 297   1        SetSDAto_InputMode();     //SDAÉèÎªÊäÈëÄ£Ê½
+ 298   1        for(i=0;i<8;i++)
+ 299   1        {
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 6   
+
+ 300   2          Data <<= 1;
+ 301   2          IIC_SetSCL(LOW);
+ 302   2          IIC_Delayus(IIC_DELAYTIME);
+ 303   2          IIC_Delayus(IIC_DELAYTIME);
+ 304   2          IIC_Delayus(IIC_DELAYTIME);
+ 305   2          IIC_SetSCL(HIGH);
+ 306   2          IIC_Delayus(IIC_DELAYTIME);
+ 307   2          IIC_Delayus(IIC_DELAYTIME);
+ 308   2          if(IIC_GetSdaStus())
+ 309   2            Data |= 1;
+ 310   2          else
+ 311   2            Data &= 0xfe;
+ 312   2        }
+ 313   1        IIC_SetSCL(LOW);
+ 314   1        
+ 315   1        IIC_Delayus(IIC_DELAYTIME);   
+ 316   1          IIC_SetSDA(bACK);
+ 317   1        IIC_Delayus(IIC_DELAYTIME);
+ 318   1          SetSDAto_OutputMode();      //SDAÉèÎªÊä³öÄ£Ê½ 
+ 319   1        IIC_SetSCL(HIGH);
+ 320   1        IIC_Delayus(IIC_DELAYTIME);
+ 321   1        IIC_Delayus(IIC_DELAYTIME);
+ 322   1        IIC_SetSCL(LOW);
+ 323   1        return Data;
+ 324   1      }
+ 325          
+ 326          
+ 327          bit IIC_ReadWithAddr(unsigned char addr, unsigned char *buf, unsigned char len)
+ 328          {
+ 329   1          unsigned char i;
+ 330   1        
+ 331   1        
+ 332   1        i = 10;
+ 333   1          while (i) 
+ 334   1        {
+ 335   2          
+ 336   2          IIC_Start();
+ 337   2              if (IIC_Send(addr) == IIC_ACK) break;
+ 338   2              if (--i == 0) return IIC_NOACK;
+ 339   2          }
+ 340   1        for(i = 0; i < len -1 ; i++)
+ 341   1        {
+ 342   2          buf[i] = IIC_Read(IIC_ACK);
+ 343   2        }
+ 344   1        buf[i] = IIC_Read(IIC_NOACK);
+ 345   1        IIC_Stop();
+ 346   1      
+ 347   1        return IIC_ACK;
+ 348   1      }
+ 349          
+ 350          bit IIC_WriteWithAddr(unsigned char addr, unsigned char *buf, unsigned char len)
+ 351          {
+ 352   1          unsigned char i,xaddr,get_ret;
+ 353   1        i = 10;
+ 354   1        xaddr = addr;//0x50;
+ 355   1        
+ 356   1          while (i>0) //for(i = 0; i < 10; i++)//
+ 357   1        {
+ 358   2          //IIC_Send(xaddr);
+ 359   2          
+ 360   2          IIC_Start();
+ 361   2          get_ret = IIC_Send(xaddr);
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 7   
+
+ 362   2          if(get_ret==IIC_ACK){break;}
+ 363   2              if (IIC_Send(xaddr) == IIC_ACK) break;
+ 364   2          i--;
+ 365   2              if (i >= 10){
+ 366   3            return IIC_NOACK;}
+ 367   2          }
+ 368   1        for(i = 0; i < len; i++)
+ 369   1        {
+ 370   2          
+ 371   2          get_ret = IIC_Send(buf[i]);
+ 372   2          if(get_ret!=0)
+ 373   2            return IIC_NOACK;
+ 374   2        }
+ 375   1          
+ 376   1        IIC_Delayus(IIC_DELAYTIME);
+ 377   1        IIC_Delayus(IIC_DELAYTIME);
+ 378   1        
+ 379   1        IIC_Stop();
+ 380   1          
+ 381   1        
+ 382   1        
+ 383   1        return IIC_ACK;
+ 384   1      }
+ 385          //----------------------------------------------------------------------------------------
+ 386          //22.1184M  1T   
+ 387          void delay_nms(unsigned int i)
+ 388          {
+ 389   1        unsigned int  j;  
+ 390   1        
+ 391   1        for(;i>0;i--)
+ 392   1        {
+ 393   2            j = 1580;
+ 394   2          while(--j); 
+ 395   2            
+ 396   2        }
+ 397   1      }
+ 398          void sd_delay(unsigned char x)
+ 399          {
+ 400   1        unsigned char  i;
+ 401   1        i = x;
+ 402   1        while(--i);
+ 403   1      }
+ 404          
+ 405          
+ 406          //-----------------------------------------
+ 407          void  accu_SMEC_GetRandom(void)
+ 408          {
+ 409   1        unsigned char k,ret,i;
+ 410   1        buf[0] = 0x84;buf[1] = 0x00;buf[2] = 0x00;buf[3] = 14;k=14;
+ 411   1        
+ 412   1        
+ 413   1        ret = IIC_WriteWithAddr(IIC_ADDR & 0xFE, buf, 4);
+ 414   1          /*
+ 415   1        if(!ret)
+ 416   1        {
+ 417   1        UART_SEND(buf[0]);
+ 418   1        UART_SEND(buf[1]);
+ 419   1        UART_SEND(buf[2]);
+ 420   1        UART_SEND(buf[3]);
+ 421   1        
+ 422   1          }
+ 423   1        
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 8   
+
+ 424   1        */
+ 425   1        
+ 426   1        ret = IIC_ReadWithAddr(IIC_ADDR | 0x1, buf, (k+2)); 
+ 427   1        //if(ret || buf[0] != 0x90 || buf[1] != 0x00)
+ 428   1        /*
+ 429   1        if(!ret)
+ 430   1        {
+ 431   1        for(i=0;i<16;i++)
+ 432   1        {
+ 433   1        UART_SEND(buf[i]);
+ 434   1        }
+ 435   1        
+ 436   1          }
+ 437   1        */
+ 438   1          //}
+ 439   1        
+ 440   1            
+ 441   1      }
+*** WARNING C280 IN LINE 409 OF main.c: 'i': unreferenced local variable
+ 442          
+ 443          void checksum_ext(void)
+ 444          {
+ 445   1        unsigned char  i,k,m,n,j;
+ 446   1      
+ 447   1        gx_checksum=0;
+ 448   1        for(i=0;i<12;i++)
+ 449   1           {gx_checksum+=buf[i];}
+ 450   1        gx_checksum *= 7;
+ 451   1        //-----------------------
+ 452   1        gx_checksum=~gx_checksum;
+ 453   1        //----------------------
+ 454   1        k=gx_checksum >> 8;
+ 455   1        m=k >> 3; n = k<<(8-3); j= m | n;
+ 456   1          xuint=j; xuint<<=8;
+ 457   1        gx_checksum &= 0x00ff; gx_checksum|=xuint;
+ 458   1        k=gx_checksum; 
+ 459   1        m=k >> 2; n = k<<(8-2); j= m | n;
+ 460   1        gx_checksum = gx_checksum & 0xff00; xuint=j;gx_checksum|=xuint;
+ 461   1        //---------------------
+ 462   1      }
+ 463          //UART_SEND(0xff);UART_SEND(0xff);UART_SEND(3);UART_SEND(0xff);UART_SEND(0xff);
+ 464          void fake_check(void)
+ 465          {
+ 466   1        unsigned char  i,j,ret,k;
+ 467   1        accu_SMEC_GetRandom();
+ 468   1        //---- Éú³ÉËæ»úÊý´æÔÚbuf[0..11]--------
+ 469   1        UART_SEND(0xff);UART_SEND(0xff);UART_SEND(2);UART_SEND(0xff);UART_SEND(0xff);
+ 470   1        for(i=0;i<12;i++)   
+ 471   1            {k=buf[2+i];sd_delay(k);buf[i]=TL0%8;UART_SEND(buf[i]);}
+ 472   1        k=buf[3];sd_delay(k);buf[12]=TL0%8;
+ 473   1        k=buf[7];sd_delay(k);buf[13]=TL0%8;
+ 474   1        //----- ´ò°ü·¢ËÍ -------------------
+ 475   1        j=13;
+ 476   1        for(i=0;i<14;i++)
+ 477   1            {buf[j+4] = buf[j]; j--;}
+ 478   1        buf[0]=0xa5; buf[1]=0; buf[2]=0;buf[3]=14+4;
+ 479   1        ret = IIC_WriteWithAddr(IIC_ADDR & 0xFE, buf, (12+2+4));  
+ 480   1        
+ 481   1        //if(ret == 1) {while(1){;}}
+ 482   1        if(!ret)
+ 483   1        {
+ 484   2        UART_SEND(0xff);UART_SEND(0xff);UART_SEND(3);UART_SEND(0xff);UART_SEND(0xff);
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 9   
+
+ 485   2        for(i=0;i<16;i++)
+ 486   2        {
+ 487   3        
+ 488   3        UART_SEND(buf[i]);
+ 489   3        }
+ 490   2        }
+ 491   1        //----- ÑÓÊ±ºó¶ÁÈ¡·´À¡ -------------
+ 492   1        delay_nms(500);
+ 493   1        ret = IIC_ReadWithAddr(IIC_ADDR | 0x1, buf, (14 + 4));
+ 494   1        //if(ret == 1) {while(1){;}}
+ 495   1        if(!ret)
+ 496   1        {
+ 497   2        UART_SEND(0xff);UART_SEND(0xff);UART_SEND(4);UART_SEND(0xff);UART_SEND(0xff);
+ 498   2        for(i=0;i<16;i++)
+ 499   2        {
+ 500   3        UART_SEND(buf[i]);
+ 501   3        }
+ 502   2        }
+ 503   1      }
+ 504          
+ 505          //-------------------------------------------------------------------------------------------
+ 506          unsigned char SMEC_GetUid(unsigned char * pUID)
+ 507          {
+ 508   1        unsigned char bBuf[16] = {0};
+ 509   1        unsigned char ret;
+ 510   1        unsigned char  len;
+ 511   1      
+ 512   1        bBuf[0] = 0x83;           //¶ÁUIDÃüÁî×Ö£¬¿É¸ü¸Ä£¬Óë¼ÓÃÜÐ¾Æ¬ÖÐ³ÌÐò±£³ÖÒ»ÖÂ
+ 513   1        bBuf[1] = 0x00;
+ 514   1        bBuf[2] = 0x00;
+ 515   1        bBuf[3] = len = 0x0c;   //ÐèÒª»ñÈ¡µÄUID³¤¶È
+ 516   1        UART_SEND(bBuf[0]);
+ 517   1        UART_SEND(bBuf[1]);
+ 518   1        UART_SEND(bBuf[2]);
+ 519   1        UART_SEND(bBuf[3]);
+ 520   1        ret = IIC_WriteWithAddr(IIC_ADDR & 0xFE, bBuf, 4);
+ 521   1        if(ret)                     //³ö´í
+ 522   1          return 1;
+ 523   1      
+ 524   1        //ËµÃ÷£ºÈôÕýÈ·»ñÈ¡UID, ¼ÓÃÜÐ¾Æ¬·µ»ØÊý¾Ý90 00 + UID1 ~ UID12£®¡¡Ç°2×Ö½ÚÎª×´Ì¬Âë, 0x9000 ±íÊ¾Ö´ÐÐÕýÈ·, ÆäËû
+             -±íÊ¾´íÎó
+ 525   1        ret = IIC_ReadWithAddr(IIC_ADDR | 0x1, bBuf, (len + 2));
+ 526   1        
+ 527   1        if(ret || bBuf[0] != 0x90 || bBuf[1] != 0x00)         //Í¨ÐÅ´íÎó»ò×´Ì¬Âë²»Îª0x9000
+ 528   1          return 1;   
+ 529   1      
+ 530   1        memcpy(pUID, bBuf + 2, len);
+ 531   1        return 0;               //¶ÁÈ¡³É¹¦
+ 532   1      }
+ 533          //---------------------------------------------------------
+ 534          //º¯ÊýÃû: ÑéÖ¤¼ÓÃÜÐ¾Æ¬SMEC98SPµÄPINÂë
+ 535          //²ÎÊýËµÃ÷£º
+ 536          //      pbPin - PINÂë
+ 537          //          bPinLen - PIN³¤¶È
+ 538          //·µ»ØÖµËµÃ÷£º
+ 539          //      0 - ³É¹¦
+ 540          //      1 - Ê§°Ü
+ 541          //---------------------------------------------------------
+ 542          unsigned char SMEC_CheckPin(unsigned char *pbPin, unsigned char bPinLen)
+ 543          {
+ 544   1        unsigned char bBuf[16] = {0};
+ 545   1        unsigned char  ret;
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 10  
+
+ 546   1      
+ 547   1        bBuf[0] = 0x70;           //¿É¸ü¸Ä£¬Óë¼ÓÃÜÐ¾Æ¬ÖÐ³ÌÐò±£³ÖÒ»ÖÂ
+ 548   1        bBuf[1] = 0x00;
+ 549   1        bBuf[2] = 0x00;
+ 550   1        bBuf[3] = bPinLen;      //ÐèÒª»ñÈ¡µÄËæ»úÊý³¤¶È
+ 551   1        
+ 552   1        ret = IIC_WriteWithAddr(IIC_ADDR & 0xFE, bBuf, bPinLen + 4);
+ 553   1        
+ 554   1        
+ 555   1        //PrintHex(bBuf, bPinLen + 4);
+ 556   1        if(ret)                     //³ö´í
+ 557   1          return 1;
+ 558   1      
+ 559   1        //ÈôÕýÈ·ÑéÖ¤PIN ¼ÓÃÜÐ¾Æ¬·µ»Ø 90 00
+ 560   1        ret = IIC_ReadWithAddr(IIC_ADDR | 0x1, bBuf, 2); 
+ 561   1        
+ 562   1        //PrintHex(bBuf, 2);
+ 563   1        if(ret || bBuf[0] != 0x90 || bBuf[1] != 0x00)         //Í¨ÐÅ´íÎó»ò×´Ì¬Âë²»Îª0x9000
+ 564   1          return 1;   
+ 565   1      
+ 566   1        return 0;               //ÑéÖ¤PIN³É¹¦
+ 567   1      }
+*** WARNING C280 IN LINE 542 OF main.c: 'pbPin': unreferenced local variable
+ 568          
+ 569          //---------------------------------------------------------
+ 570          
+ 571          void SMEC_Test(void)
+ 572          {
+ 573   1        /*¸÷ÖÖÃÜÔ¿,²»»áÔÚI2CÏßÂ·ÉÏ´«Êä,¿ÉÒÔÊ¹ÓÃÍ¬Ò»×é.Ó¦¸Ã½«ÃÜÔ¿·ÖÉ¢´æ´¢,·ÀÖ¹Ö÷¿ØÐ¾Æ¬±»ÆÆ½âºó,±»¹¥»÷ÕßÔÚ¶þ½øÖÆÂëÖ
+             -ÐÕÒµ½ÃÜÔ¿ */
+ 574   1      //  unsigned char InternalKey[16] = {0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0A,0x0B,0x0C,0x0D,
+             -0x0E,0x0F};//ÄÚ²¿ÈÏÖ¤ÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+ 575   1      //  unsigned char ExternalKey[16] = {0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19,0x1A,0x1B,0x1C,0x1D,
+             -0x1E,0x1F};//Íâ²¿ÈÏÖ¤ÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+ 576   1      //  unsigned char SHA1_Key[16] = {0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x2A,0x2B,0x2C,0x2D,0x2
+             -E,0x2F};   //¹þÏ£Ëã·¨ÈÏÖ¤ÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+ 577   1      //  unsigned char MKey[16] = {0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x3A,0x3B,0x3C,0x3D,0x3E,0x
+             -3F};   //Ö÷¿ØÃÜÔ¿,ÓÃÓÚ²úÉú¹ý³ÌÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+ 578   1      
+ 579   1        unsigned char Pin[8] = {0x55,0x66,0x77,0x88,0x99,0xaa,0xbb,0xcc};     //PinÈÏÖ¤ÃÜÔ¿,±ØÐëºÍSMEC98SPÒ»ÖÂ
+ 580   1          
+ 581   1        //unsigned char bSmec98spUid[12] = {0};   //´æ·ÅSMEC98SPµÄUID
+ 582   1        //unsigned short RandomSeek = 0;        //Ëæ»úÊýÖÖ×Ó
+ 583   1        //unsigned char bRandom[8] = {0};       //´æ·ÅËæ»úÊý
+ 584   1        //unsigned char bSessionKey[8] = {0};     //´æ·Å¹ý³ÌÃÜÔ¿,¹ý³ÌÃÜÔ¿ÎªÁÙÊ±²úÉúµÄÃÜÔ¿
+ 585   1        //unsigned char bDataBuf[64] = {0};
+ 586   1        unsigned char ret;
+ 587   1      
+ 588   1        
+ 589   1         
+ 590   1        
+ 591   1        //»ñÈ¡SMEC98SPµÄUID
+ 592   1        //ret = SMEC_GetUid(bSmec98spUid);
+ 593   1        ret = SMEC_CheckPin(Pin, (unsigned char)sizeof(Pin));
+ 594   1      
+ 595   1      
+ 596   1      }
+ 597          
+ 598          
+ 599          //////////////////////////////////////////////////////////////////////
+ 600          void main(void)
+ 601          {
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 11  
+
+ 602   1        unsigned char  ret,i,k,j,flag;
+ 603   1        P3M0 = 0x00;
+ 604   1        P3M1 = 0x00;
+ 605   1        P5M1= 0x00;
+ 606   1        P5M0 =0x00;
+ 607   1        
+ 608   1        P_SW2 =0x80;
+ 609   1        CKSEL =0x00;
+ 610   1        P_SW2 =0x00;
+ 611   1        
+ 612   1        
+ 613   1      
+ 614   1        TMOD = 0xf0;                        //timer0 in 16-bit auto reload mode
+ 615   1          AUXR = 0x80;                        //timer0 working at 1T mode
+ 616   1          TL0 = 0x30;//0x8f+0x05;//BAUD;
+ 617   1          TH0 = 0xff;//0xfd;//BAUD>>8;                      //initial timer0 and set reload value
+ 618   1        TF0 =0;
+ 619   1          TR0 = 1;                            //tiemr0 start running
+ 620   1          ET0 = 1;                            //enable timer0 interrupt
+ 621   1          PT0 = 1;                            //improve timer0 interrupt priority
+ 622   1          EA = 1;                             //open global interrupt switch
+ 623   1      
+ 624   1        
+ 625   1          UART_INIT();
+ 626   1        EN = 1; 
+ 627   1        
+ 628   1        gfail=0;
+ 629   1        //gstacki = 0;
+ 630   1        
+ 631   1        while(1)
+ 632   1        {
+ 633   2      
+ 634   2        
+ 635   2        if(EN == 0)
+ 636   2        {
+ 637   3        IO_INOUT = 0;
+ 638   3        delay_nms(1);
+ 639   3        UART_SEND(0xaa);
+ 640   3        delay_nms(1);
+ 641   3        UART_SEND(0x01);
+ 642   3          delay_nms(1); 
+ 643   3        IO_INOUT = 1;
+ 644   3        
+ 645   3        delay_nms(1);
+ 646   3        IO_INOUT = 0; 
+ 647   3        IO_INOUT = 1;
+ 648   3        
+ 649   3        delay_nms(1);
+ 650   3      //-------------------------------------------------------------------------
+ 651   3      //delay_nms(12000);     //µÈ´ý¼ÓÃÜÐ¾Æ¬ÉÏµç¸´Î»Íê³É
+ 652   3        //---------- Î±Ð£Ñé ----------------------------------------
+ 653   3        //SMEC_Test();
+ 654   3        //fake_check();
+ 655   3        delay_nms(300);
+ 656   3        //UART_SEND(0xff);UART_SEND(0xff);UART_SEND(5);UART_SEND(0xff);UART_SEND(0xff);
+ 657   3      /*
+ 658   3        delay_nms(300);
+ 659   3        fake_check();
+ 660   3        delay_nms(300);
+ 661   3        fake_check();
+ 662   3        delay_nms(300);
+ 663   3        fake_check();
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 12  
+
+ 664   3        delay_nms(300);
+ 665   3        fake_check();
+ 666   3        delay_nms(300);  
+ 667   3        */
+ 668   3          
+ 669   3        //----- get random -------
+ 670   3      
+ 671   3        accu_SMEC_GetRandom();
+ 672   3        if(ret == 1) {while(1){;}}
+ 673   3        //--------------------------------------
+ 674   3        //---- Éú³ÉËæ»úÊý´æÔÚbuf[0..11]--------
+ 675   3        for(i=0;i<12;i++)   
+ 676   3            {k=buf[2+i];sd_delay(k);buf[i]=TL0%8;}
+ 677   3        //------ ÓÃÇóºÍ¼ÓÃÜ ------------------
+ 678   3        flag++;
+ 679   3        if(flag>100){flag = 0;}
+ 680   3        if(flag%2 == 0)
+ 681   3        {
+ 682   4        checksum_ext();
+ 683   4        }
+ 684   3        //----- ´ò°ü·¢ËÍ 3 7-------------------
+ 685   3        j=11;
+ 686   3        for(i=0;i<12;i++)
+ 687   3            {buf[j+4] = buf[j]; j--;}
+ 688   3        buf[0]=0xa5; buf[1]=0; buf[2]=0;buf[3]=12+2+4;
+ 689   3        buf[12+4]=buf[3+4]; buf[3+4]=gx_checksum>>8; 
+ 690   3        buf[12+4+1]=buf[7+4]; buf[7+4]=gx_checksum;
+ 691   3        ret = IIC_WriteWithAddr(IIC_ADDR & 0xFE, buf, (12+2+4));
+ 692   3          
+ 693   3        if(ret == 1) {while(1){;}}
+ 694   3        /*
+ 695   3        if(!ret)
+ 696   3        {
+ 697   3        UART_SEND(0xff);UART_SEND(0xff);UART_SEND(3);UART_SEND(0xff);UART_SEND(0xff);
+ 698   3        for(i=0;i<18;i++)
+ 699   3        {
+ 700   3        
+ 701   3        UART_SEND(buf[i]);
+ 702   3        }
+ 703   3        }*/
+ 704   3        //---------- ¶ÁÈ¡½á¹û------------------------------------
+ 705   3        delay_nms(500);
+ 706   3        ret = IIC_ReadWithAddr(IIC_ADDR | 0x1, buf, (14 + 4));
+ 707   3        if(ret == 1) {while(1){;}}
+ 708   3        /*
+ 709   3        if(!ret)
+ 710   3        {
+ 711   3        UART_SEND(0xff);UART_SEND(0xff);UART_SEND(6);UART_SEND(0xff);UART_SEND(0xff);
+ 712   3        for(i=0;i<18;i++)
+ 713   3        {
+ 714   3        
+ 715   3        UART_SEND(buf[i]);
+ 716   3        }
+ 717   3        }*/
+ 718   3        //----------- ÕûÀí½á¹û--5,11---------------------------------   
+ 719   3        gx_checksum_get=buf[3+4];  gx_checksum_get <<=8; gx_checksum_get+=buf[7+4];
+ 720   3        buf[3+4] =buf[12+4]; buf[7+4]=buf[12+4+1]; 
+ 721   3        for(i=0;i<12;i++)
+ 722   3            {buf[i] = buf[i+4];}
+ 723   3        checksum_ext();
+ 724   3        UART_SEND(gx_checksum_get);UART_SEND(gx_checksum_get>>8);
+ 725   3        UART_SEND(0xff);UART_SEND(0xff);
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 13  
+
+ 726   3        UART_SEND(gx_checksum);UART_SEND(gx_checksum>>8);
+ 727   3        //---------- Ð£Ñé½á¹û ---------------------------
+ 728   3        gfail=0;
+ 729   3        if(gx_checksum_get != gx_checksum){gfail=1;}
+ 730   3        /*   
+ 731   3        //---------- Î±Ð£Ñé ----------------------------------------
+ 732   3        fake_check();
+ 733   3        delay_nms(300);
+ 734   3        
+ 735   3        fake_check();
+ 736   3        delay_nms(300);
+ 737   3        fake_check();
+ 738   3        delay_nms(300);
+ 739   3        fake_check();
+ 740   3        delay_nms(300);
+ 741   3        */
+ 742   3        //-----------------------------------------------------------
+ 743   3          //--- uart send (fail) here --------------------------------- 
+ 744   3        UART_SEND(0xFF);UART_SEND(0xFF);
+ 745   3        UART_SEND(gfail);
+ 746   3      //------------------------------------------------------------------------
+ 747   3      
+ 748   3      /*  delay_nms(200);
+ 749   3        i2c_single_byte_write(0xca,0x00,gfail);
+ 750   3        
+ 751   3        i2c_single_byte_write(0xca,0x01,2);
+ 752   3        i2c_single_byte_write(0xca,0x02,3);
+ 753   3        i2c_single_byte_write(0xca,0x03,4);
+ 754   3        UART_SEND(i2c_single_byte_read(0xca,01));
+ 755   3        UART_SEND(i2c_single_byte_read(0xca,02));
+ 756   3        UART_SEND(i2c_single_byte_read(0xca,03));*/
+ 757   3      //-------------------fpga ¼ÓÃÜ-----------------------
+ 758   3      accu_SMEC_GetRandom();
+ 759   3        if(ret == 1) {while(1){;}}
+ 760   3        //--------------------------------------
+ 761   3        //---- Éú³ÉËæ»úÊý´æÔÚbuf[0..11]--------
+ 762   3        for(i=0;i<12;i++)   
+ 763   3            {k=buf[2+i];sd_delay(k);buf[i]=TL0;}
+ 764   3      
+ 765   3        //------ ÓÃÇóºÍ¼ÓÃÜ ------------------
+ 766   3        
+ 767   3        checksum_ext();
+ 768   3        
+ 769   3        //----- ´ò°ü·¢ËÍ 3 7-------------------
+ 770   3       
+ 771   3        
+ 772   3        buf[12]=buf[3]; buf[3]=gx_checksum>>8; 
+ 773   3        buf[12+1]=buf[7]; buf[7]=gx_checksum;
+ 774   3        //UART_SEND(0xff);UART_SEND(0xff);UART_SEND(5);UART_SEND(0xff);UART_SEND(0xff);
+ 775   3        for(i=0;i<14;i++)
+ 776   3        { 
+ 777   4        i2c_single_byte_write(0xca, i, buf[i]);
+ 778   4        //UART_SEND(buf[i]);
+ 779   4        }
+ 780   3          
+ 781   3        //if(ret == 1) {while(1){;}}
+ 782   3        delay_nms(500);
+ 783   3        /*
+ 784   3        //UART_SEND(0xff);UART_SEND(0xff);UART_SEND(6);UART_SEND(0xff);UART_SEND(0xff);
+ 785   3        for(i=0;i<14;i++)
+ 786   3        { 
+ 787   3        buf[i] = i2c_single_byte_read(0xca, i);
+C51 COMPILER V9.06   MAIN                                                                  06/16/2021 18:22:53 PAGE 14  
+
+ 788   3        //UART_SEND(buf[i]);
+ 789   3        }
+ 790   3        //if(ret == 1) {while(1){;}}
+ 791   3        gx_checksum_get=buf[3];  gx_checksum_get <<=8; gx_checksum_get+=buf[7];
+ 792   3        buf[3] =buf[12]; buf[7]=buf[12+1]; 
+ 793   3        
+ 794   3        checksum_ext();
+ 795   3        UART_SEND(gx_checksum_get);UART_SEND(gx_checksum_get>>8);
+ 796   3        UART_SEND(0xff);UART_SEND(0xff);
+ 797   3        UART_SEND(gx_checksum);UART_SEND(gx_checksum>>8);
+ 798   3        //---------- Ð£Ñé½á¹û ---------------------------
+ 799   3        if(gx_checksum_get != gx_checksum){gfail=1;}
+ 800   3        //--- uart send (fail) here ---------------------------------
+ 801   3        UART_SEND(0xFF);UART_SEND(0xFF);  
+ 802   3        UART_SEND(gfail);
+ 803   3        */
+ 804   3        delay_nms(200);
+ 805   3        //i2c_single_byte_read(0xcb,00);
+ 806   3        //i2c_single_byte_write(unsigned char xdevaddr,unsigned char xbyte_addr,unsigned char xbyte_data);
+ 807   3        //i2c_single_byte_read(unsigned char xdevaddr,unsigned char RdAddr);
+ 808   3          
+ 809   3        
+ 810   3          }
+ 811   2        //else ;
+ 812   2        }
+ 813   1      }
+ 814          
+ 815           
+ 816          
+ 817          
+ 818          
+ 819          
+ 820          
+ 821          
+ 822          //-----------------------------------------
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1755    ----
+   CONSTANT SIZE    =     40    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     35      71
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      4    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

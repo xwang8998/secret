@@ -1,0 +1,213 @@
+C51 COMPILER V9.00   MONI_I2C_A                                                            06/18/2021 18:15:38 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MONI_I2C_A
+OBJECT MODULE PLACED IN MONI_I2C_A.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE MONI_I2C_A.C BROWSE INCDIR(.\SMEC98SP\Header;..\stc8g_demo) DEBUG OBJECTEXT
+                    -END
+
+line level    source
+
+   1          /*********************************************************************************************************
+             -************************/
+   2          //#include      "STC15Fxxxx.H"
+   3          #include        "moni_I2C_A.h"
+   4          
+   5          #include "reg51.h"
+   6          #include "intrins.h"
+   7          //#include "uart.h"
+   8          //#include "gpio.h"
+   9          
+  10          #ifndef uchar 
+              #define uchar unsigned char 
+              #endif 
+  13          #ifndef uint 
+              #define uint unsigned int 
+              #endif 
+  16          //void UART_SEND(BYTE dat);
+  17          //#define WD7188        0X40
+  18          //#define RD7188        0X41 
+  19          
+  20          //sbit  pSDA    =       P1^2;//P3^7;
+  21          //sbit  pSCL    =       P1^1;//P3^6;
+  22          //sbit  pSDA    =       P2^2;//P2^4;//P3^2;  //7 
+  23          //sbit  pSCL    =       P2^1;//P3^3;  //8
+  24          
+  25          
+  26          bit   bACK;
+  27          
+  28          sbit    IIC_SDA =       P3^3;//P2^7;
+  29          sbit    IIC_SCL =       P3^2;//P2^6;
+  30          
+  31          
+  32          //-----------------------------------------------
+  33          //========================== 功能子函数===============================
+  34          void delay(unsigned int t)
+  35          {// 延时函数
+  36   1      while(t){t--;}; //延时循环计数
+  37   1      }
+  38          //-------------------------------------------------------------------
+  39          void delay_IIC(void)
+  40          {//IIC 总线限速延时函数。
+  41   1      //该函数是空函数，延时4 个机器周期。
+  42   1      delay(20);
+  43   1      }
+  44          //-------------------------------------------------------------------
+  45          void i2c_Init(void)
+  46          {//IIC 总线初始化函数
+  47   1      IIC_SDA=1;// 释放IIC 总线的数据线。
+  48   1      IIC_SCL=1;// 释放IIC 总线的时钟线。
+  49   1      }
+  50          //-------------------------------------------------------------------
+  51          void i2c_start(void)
+  52          {//IIC 总线产生起始信号函数
+  53   1      IIC_SDA=1;// 拉高数据线
+C51 COMPILER V9.00   MONI_I2C_A                                                            06/18/2021 18:15:38 PAGE 2   
+
+  54   1      IIC_SCL=1;// 拉高时钟线
+  55   1      delay_IIC();
+  56   1      IIC_SDA=0;// 在时钟线为高电平时，拉低数据线，产生起始信号。
+  57   1      delay_IIC();
+  58   1      IIC_SCL=0;// 拉低时钟线
+  59   1      }
+  60          //-------------------------------------------------------------------
+  61          void i2c_stop(void)
+  62          {//IIC 总线产生停止信号函数
+  63   1      IIC_SDA=0;// 拉低数据线
+  64   1      delay_IIC();
+  65   1      IIC_SCL=1;// 拉高时钟线。
+  66   1      delay_IIC();
+  67   1      IIC_SDA=1;// 时钟时线为高电平时，拉高数据线，产生停止信号。
+  68   1      delay_IIC();
+  69   1      }
+  70          //-------------------------------------------------------------------
+  71          bit i2c_Tack(void)
+  72          {// 接收应答信号函数
+  73   1      bit ack;// 定义一个位变量，来暂存应答状态。
+  74   1      IIC_SDA=1;// 释放数据总线，准备接收应答信号。
+  75   1      delay_IIC();
+  76   1      IIC_SCL=1;// 拉高时钟线。
+  77   1      delay_IIC();
+  78   1      ack=IIC_SDA;// 读取应答信号的状态。
+  79   1      delay_IIC();
+  80   1      IIC_SCL=0;// 拉低时钟线。
+  81   1      delay_IIC();
+  82   1      return ack;// 返回应答信号的状态， 0 表示应答， 1 表示非应答。
+  83   1      }
+  84          //-------------------------------------------------------------------
+  85          void i2c_write_byte(unsigned char Data)
+  86          {// 向IIC 总线写入一个字节的数据函数
+  87   1      unsigned char i;
+  88   1      for(i=0;i<8;i++)// 有8 位数据
+  89   1      {
+  90   2      IIC_SDA=Data&0x80;// 写最高位的数据
+  91   2      delay_IIC();
+  92   2      IIC_SCL=1; // 拉高时钟线，将数写入到设备中。
+  93   2      delay_IIC();
+  94   2      IIC_SCL=0;// 拉低时钟线，允许改变数据线的状态
+  95   2      delay_IIC();
+  96   2      Data=Data<<1;// 数据左移一位，把次高位放在最高位,为写入次高位做准备
+  97   2      }
+  98   1      }
+  99          //-------------------------------------------------------------------
+ 100          unsigned char i2c_read_byte()
+ 101          {// 从IIC 总线读取一个字节的数据函数
+ 102   1      unsigned char i;
+ 103   1      unsigned char Data; //定义一个缓冲寄存器。
+ 104   1      for(i=0;i<8;i++)// 有8 位数据
+ 105   1      {
+ 106   2      IIC_SCL=1;// 拉高时钟线，为读取下一位数据做准备。
+ 107   2      delay_IIC();
+ 108   2      Data=Data<<1;// 将缓冲字节的数据左移一位，准备读取数据。
+ 109   2      delay_IIC();
+ 110   2      if(IIC_SDA)// 如果数据线为高平电平。
+ 111   2      Data=Data|0x1;// 则给缓冲字节的最低位写1。
+ 112   2      IIC_SCL=0;// 拉低时钟线，为读取下一位数据做准备。
+ 113   2      delay_IIC();
+ 114   2      }
+ 115   1      
+C51 COMPILER V9.00   MONI_I2C_A                                                            06/18/2021 18:15:38 PAGE 3   
+
+ 116   1      
+ 117   1      return Data;// 返回读取的一个字节数据。
+ 118   1      }
+ 119          //-------------------------------------------------------------------
+ 120          void i2c_single_byte_write(unsigned char Daddr,unsigned char Waddr,unsigned char Data)
+ 121          {// 向任意地址写入一个字节数据函数
+ 122   1      i2c_start();// 产生起始信号
+ 123   1      i2c_write_byte(Daddr);// 写入设备地址（写）
+ 124   1      //FPGA_CTR=0;
+ 125   1      i2c_Tack();// 等待设备的应答
+ 126   1      //FPGA_CTR=1;
+ 127   1      i2c_write_byte(Waddr);// 写入要操作的单元地址。
+ 128   1      //FPGA_CTR=0;
+ 129   1      i2c_Tack();// 等待设备的应答。
+ 130   1      //FPGA_CTR=1;
+ 131   1      i2c_write_byte(Data);// 写入数据。
+ 132   1      //FPGA_CTR=0;
+ 133   1      i2c_Tack();// 等待设备的应答。
+ 134   1      //----------------------------------------------------
+ 135   1      /*
+ 136   1      i2c_write_byte(Data);// 写入数据。
+ 137   1      //FPGA_CTR=0;
+ 138   1      i2c_Tack();// 等待设备的应答。
+ 139   1      i2c_write_byte(Data);// 写入数据。
+ 140   1      //FPGA_CTR=0;
+ 141   1      i2c_Tack();// 等待设备的应答。
+ 142   1      i2c_write_byte(Data);// 写入数据。
+ 143   1      //FPGA_CTR=0;
+ 144   1      i2c_Tack();// 等待设备的应答。
+ 145   1      
+ 146   1      */
+ 147   1      //------------------------------------------------------
+ 148   1      //FPGA_CTR=1;
+ 149   1      i2c_stop();// 产生停止符号。
+ 150   1      
+ 151   1      }
+ 152          //-------------------------------------------------------------------
+ 153          unsigned char i2c_single_byte_read(unsigned char Daddr,unsigned char Waddr)
+ 154          {// 从任意地址读取一个字节数据函数
+ 155   1      unsigned char Data;//定义一个缓冲寄存器。
+ 156   1      i2c_start();// 产生起始信号
+ 157   1      i2c_write_byte(Daddr);// 写入设备地址（写）
+ 158   1      i2c_Tack();// 等待设备的应答
+ 159   1      i2c_write_byte(Waddr);// 写入要操作的单元地址。
+ 160   1      i2c_Tack();// 等待设备的应答。
+ 161   1      i2c_start();// 产生起始信号
+ 162   1      i2c_write_byte(Daddr+1);// 写入设备地址（读） 。
+ 163   1      i2c_Tack();// 等待设备的应答。
+ 164   1      Data=i2c_read_byte();// 写入数据。
+ 165   1      i2c_Tack();
+ 166   1      //---------------------------------------------
+ 167   1      /*
+ 168   1      Data=i2c_read_byte();// 写入数据。
+ 169   1      i2c_Tack();
+ 170   1      Data=i2c_read_byte();// 写入数据。
+ 171   1      i2c_Tack();
+ 172   1      Data=i2c_read_byte();// 写入数据。
+ 173   1      i2c_Tack();
+ 174   1      
+ 175   1      */
+ 176   1      //-----------------------------------------------
+ 177   1      
+C51 COMPILER V9.00   MONI_I2C_A                                                            06/18/2021 18:15:38 PAGE 4   
+
+ 178   1      i2c_stop();// 产生停止符号。
+ 179   1      
+ 180   1      //------------------- 返回读取的数据--------------------
+ 181   1      return Data;// 返回读取的一个字节数据。
+ 182   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    208    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

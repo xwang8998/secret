@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"main.obj",
+"MONI_I2C_A.obj" 
+TO "stc8g" 
+RAMSIZE(256) 
